@@ -12,8 +12,8 @@ class GoBuffer(Buffer):
         def is_multiline():
             text = self.document.text
             return (
-                self.always_multiline or 
-                not multiline_evaluator(text)
+                self.always_multiline or
+                not GoBuffer.multiline_evaluator(text)
             )
         
         super(self.__class__, self).__init__(*args, is_multiline=is_multiline, **kwargs)

@@ -12,7 +12,7 @@ _STYLE = {
     Token.String: '#00ff00 bold'
 }
 
-get_style = lambda style_name='native': PygmentsStyle(
+get_style = lambda style_name='native': PygmentsStyle.from_defaults(
     style_dict=_STYLE,
     pygments_style_cls=pygments.styles.get_style_by_name(style_name)
 )

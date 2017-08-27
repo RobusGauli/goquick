@@ -1,4 +1,60 @@
 from prompt_toolkit.interface import CommandLineInterface
 from prompt_toolkit.application import Application
-from prompt_toolkit.shortcuts import create_eventloop
-from prompt_toolkit.lexers.go import GoLexer
+from prompt_toolkit.shortcuts import create_eventloop, create_prompt_layout
+from prompt_toolkit.layout.lexers import PygmentsLexer
+from prompt_toolkit.buffer import AcceptAction
+
+from pygments.lexers.go import GoLexer
+from pygments.token import Token
+
+from quickgo.gobuffer import GoBuffer
+from quickgo.gostyle import get_style
+
+class GoCLI(object):
+
+    def __init__(self):
+        self.event_loop = create_eventloop()
+        self.cli = None
+    
+    def __enter__(self):
+        self.cli = self._build_cli()
+        if self.cli:
+            return self.cli
+        else:
+            raise ValueError('Need to build CLI instance')
+
+    def __exit__(self, *args, **kwargs):
+        #print(args, kwargs)
+        self.cli = None
+
+    def _build_cli(self):
+
+        get_prompt_tokens = lambda cli: \
+                            [(Token.Prompt, 'In [%d]: ' % cli.current_buffer.return_count)]
+        get_continuation_tokens = lambda cli, width: \
+                            [(Token.Continuation, '.' * (width - 1) + ' ')]
+
+        layout = create_prompt_layout(
+            lexer=PygmentsLexer(GoLexer),
+            get_prompt_tokens=get_prompt_tokens,
+            get_continuation_tokens=get_continuation_tokens,
+            multiline=True
+        )
+
+        buffer = GoBuffer(
+            always_multiline=False,
+            accept_action=AcceptAction.RETURN_DOCUMENT
+        )
+        application = Application(
+            layout=layout,
+            buffer=buffer,
+            style=get_style(),
+            ignore_case=True
+        )
+
+        cli = CommandLineInterface(application=application, eventloop=self.event_loop)
+        return cli
+
+
+
+        
