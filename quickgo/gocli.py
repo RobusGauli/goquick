@@ -1,6 +1,7 @@
+import itertools
 from prompt_toolkit.interface import CommandLineInterface
 from prompt_toolkit.application import Application
-from prompt_toolkit.shortcuts import create_eventloop, create_prompt_layout
+from prompt_toolkit.shortcuts import create_eventloop, create_prompt_layout, print_tokens
 from prompt_toolkit.layout.lexers import PygmentsLexer
 from prompt_toolkit.buffer import AcceptAction
 
@@ -9,6 +10,7 @@ from pygments.token import Token
 
 from quickgo.gobuffer import GoBuffer
 from quickgo.gostyle import get_style
+from quickgo.key_bindings import key_bindings_registry
 
 class GoCLI(object):
 
@@ -28,6 +30,7 @@ class GoCLI(object):
         self.cli = None
 
     def _build_cli(self):
+        
 
         get_prompt_tokens = lambda cli: \
                             [(Token.Prompt, 'In [%d]: ' % cli.current_buffer.return_count)]
@@ -49,9 +52,11 @@ class GoCLI(object):
             layout=layout,
             buffer=buffer,
             style=get_style(),
+            key_bindings_registry=key_bindings_registry(),
             ignore_case=True
         )
-
+        render_title = lambda text: zip(itertools.repeat(Token), ['\nQuickGo\n', 'Author: Robus Gauli | robusgauli@gmail.com\n',text,'\n\n'])
+        print_tokens(render_title('Version: Experimental 0.0.0'))
         cli = CommandLineInterface(application=application, eventloop=self.event_loop)
         return cli
 

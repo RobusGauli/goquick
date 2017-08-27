@@ -22,10 +22,8 @@ class GoBuffer(Buffer):
     def multiline_evaluator(text):
         text = text.strip()
         return (
-            text.endswith(';;') or 
-            (text == 'exit') or
-            (text == 'quit') or
-            (text == ':q') 
+            text.endswith(';;') or
+            text in ['quit', 'exit', 'exit()', 'quit()', ':q']
         ) 
 
         
