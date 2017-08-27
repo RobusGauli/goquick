@@ -1,5 +1,6 @@
+import click
 from quickgo.gocli import GoCLI
-from prompt_toolkit.shortcuts import print_tokens
+from quickgo.goprint import goprint
 
 def evaluate_exit_cond(doc):
     if not doc:
@@ -17,9 +18,12 @@ def main():
             if err:
                 print(message)
                 break
+            goprint( cli.current_buffer.return_count, doc.text)
             #if line breaks then increase the counter
             cli.current_buffer.return_count += 1
-            print(doc.text)
+            #goprint(doc.text)
+            
+            
 
             
 
