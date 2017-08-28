@@ -12,7 +12,7 @@ class GoBuffer(Buffer):
         def is_multiline():
             text = self.document.text
             return (
-                self.always_multiline or
+                self.always_multiline and
                 not GoBuffer.multiline_evaluator(text)
             )
         
