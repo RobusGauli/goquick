@@ -24,6 +24,8 @@ class GoBuffer(Buffer):
         return (
             text.endswith(';;') or
             text in ['quit', 'exit', 'exit()', 'quit()', ':q']
-        ) 
-
+        )
+    def inc(self):
+        self.return_count += 1 
+    
         

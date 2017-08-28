@@ -10,5 +10,5 @@ style = style_from_dict({
 
 
 
-goprint = lambda count, text: \
-        print_tokens(zip(itertools.cycle([Token.OutPrompt, Token.String]), ['Out[%d]: ' % count, text, '\n\n']), style=style)
+gprint = lambda buff: lambda  text: \
+        print_tokens(zip(itertools.cycle([Token.OutPrompt, Token.String]), ['Out[%d]: ' % buff.return_count, text, '\n\n']), style=style)

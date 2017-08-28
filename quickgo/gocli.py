@@ -11,6 +11,7 @@ from pygments.token import Token
 from quickgo.gobuffer import GoBuffer
 from quickgo.gostyle import get_style
 from quickgo.key_bindings import key_bindings_registry
+from quickgo.gotoolbar import get_toolbar_tokens
 
 class GoCLI(object):
 
@@ -37,16 +38,16 @@ class GoCLI(object):
         get_continuation_tokens = lambda cli, width: \
                             [(Token.Continuation, '.' * (width - 1) + ' ')]
 
+        buffer = GoBuffer(
+            always_multiline=False,
+            accept_action=AcceptAction.RETURN_DOCUMENT
+        )
         layout = create_prompt_layout(
             lexer=PygmentsLexer(GoLexer),
             get_prompt_tokens=get_prompt_tokens,
             get_continuation_tokens=get_continuation_tokens,
+            get_bottom_toolbar_tokens=get_toolbar_tokens,
             multiline=True
-        )
-
-        buffer = GoBuffer(
-            always_multiline=False,
-            accept_action=AcceptAction.RETURN_DOCUMENT
         )
         application = Application(
             layout=layout,
