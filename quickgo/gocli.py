@@ -34,12 +34,12 @@ class GoCLI(object):
         
 
         get_prompt_tokens = lambda cli: \
-                            [(Token.Prompt, 'In [%d]: ' % cli.current_buffer.return_count)]
+                            [(Token.Prompt, '\nIn [%d]: ' % cli.current_buffer.return_count)]
         get_continuation_tokens = lambda cli, width: \
                             [(Token.Continuation, '.' * (width - 1) + ' ')]
 
         buffer = GoBuffer(
-            always_multiline=False,
+            always_multiline=True,
             accept_action=AcceptAction.RETURN_DOCUMENT
         )
         layout = create_prompt_layout(

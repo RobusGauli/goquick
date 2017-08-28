@@ -4,9 +4,9 @@ from prompt_toolkit.styles import PygmentsStyle
 
 _STYLE = {
     Token: '#ffffff ',
-    Token.Toolbar: '#ffffff bg:#111111',
-    Token.Toolbar.On: '#666666',
-    Token.Toolbar.Off: '#999999',
+    Token.Toolbar: '#ffffff bg:#333',
+    Token.Toolbar.On: '#fffe33',
+    Token.Toolbar.Off: '#fffe33',
     Token.Prompt: '#00ff00',
     Token.Continuation: '#00ff00',
     Token.String: '#00ff00'

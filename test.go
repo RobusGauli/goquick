@@ -1,2 +1,7 @@
 package main
-clear;;
+import "fmt"
+import "time"
+func main() {
+    fmt.Println(time.Now())
+    }
+    

@@ -23,7 +23,7 @@ class GoBuffer(Buffer):
         text = text.strip()
         return (
             text.endswith(';;') or
-            text in ['quit', 'exit', 'exit()', 'quit()', ':q']
+            text in ['quit', 'exit', 'exit()', 'quit()', ':q', 'clear']
         )
     def inc(self):
         self.return_count += 1 

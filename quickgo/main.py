@@ -154,7 +154,7 @@ def main():
             if doc.text == 'clear':
                 clear()
                 continue
-            response = repl(doc.text, file_name='test.go')
+            response = repl(doc.text.rstrip(';;'), file_name='test.go')
             response.evaluate()
 
             #gprint(response)

@@ -15,9 +15,9 @@ def key_bindings_registry():
         buff = event.cli.current_buffer
         buff.insert_text(' ' * 4)
     
-    @registry.add_binding(Keys.F4)
-    def ___(event):
-        buff = event.cli.current_buffer
-        buff.always_multiline = not buff.always_multiline
+    # @registry.add_binding(Keys.F4)
+    # def ___(event):
+    #     buff = event.cli.current_buffer
+    #     buff.always_multiline = not buff.always_multiline
 
     return registry
