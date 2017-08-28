@@ -37,7 +37,8 @@ class MainStatementNode:
         return '\n'.join(st_line for st_line in self.main_statements)
 
 
-class Repl:
+class ExperimentalRepl:
+    '''This is an attempt to make interactive REPL. The code here might break'''
     
     def __init__(self):
         self._state = rdict()
@@ -60,7 +61,7 @@ class Repl:
         self._clear_fmt_prints()
         return (
             'package main\n'
-            'import "fmt"'
+            'import "fmt"\n'
             '%s\n'
             'func main() {'
             '%s\n'
@@ -75,6 +76,7 @@ class Repl:
     def _clear_fmt_prints(self):
         self._state.main_statement_node.main_statements = \
             [stat for stat in self._state.main_statement_node.main_statements if not stat.startswith('fmt.Println')]
+    
     def _write_to_file(self):
         _file = open(self._file_name, mode='w+')
         _file.write(self.generate_code())
@@ -94,16 +96,41 @@ class Repl:
         self._current_state.main_statement_node.main_statements.clear()
     
     def evaluate(self, text):
-        if text.startswith('import'):
-            self._current_state.import_node.add_import(text)
-        else:
-            self._current_state.main_statement_node.add_main_statements(text)
+        # if text.startswith('import'):
+        #     self._current_state.import_node.add_import(text)
+        # else:
+        #     self._current_state.main_statement_node.add_main_statements(text)
         
         #now write to the _file
+        
         self._write_to_file()
         self.execute()
         
-        
+
+def repl(code, file_name=None):
+    if not file_name:
+        file_name = 'temp.go'
+    _command = 'go run %s' % file_name
+    def generate_code():
+        return (
+            'package main\n'
+            '%s'
+        ) % code
+
+    def write_to_file():
+        _file = open(file_name, mode='w')
+        _file.write(generate_code())
+        _file.close()
+
+    def execute():
+        return_code = subprocess.call(_command.split(), stdout=sys.stdin, stderr=sys.stderr)
+
+    def evaluate():
+        write_to_file()
+        execute()
+    r = rdict()
+    r.evaluate = evaluate
+    return r    
 
 def evaluate_exit_cond(doc):
     if not doc:
@@ -116,7 +143,6 @@ def evaluate_exit_cond(doc):
 
 def main():
     global gprint
-    repl = Repl()
     with GoCLI() as cli:
         gprint = gprint(cli.current_buffer)
         while True:
@@ -128,7 +154,9 @@ def main():
             if doc.text == 'clear':
                 clear()
                 continue
-            response = repl.evaluate(doc.text)
+            response = repl(doc.text, file_name='test.go')
+            response.evaluate()
+
             #gprint(response)
             
             #if line breaks then increase the counter
