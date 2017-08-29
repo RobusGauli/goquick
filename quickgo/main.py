@@ -7,7 +7,7 @@ from quickgo.gocli import GoCLI
 from quickgo.goprint import gprint
 from prompt_toolkit.shortcuts import clear
 
-err_regex = re.compile(r'(?:(?::\d)+)?:([:a-z"\. \'A-Z,]+)')
+err_regex = re.compile(r'(?:(?::\d)+)?:([:a-z"\. \'A-Z,-]+)')
 format_error = lambda text: '\n'.join(s for s in err_regex.findall(text)).strip()
 
 class rdict(dict):
