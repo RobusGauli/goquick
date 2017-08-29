@@ -1,1 +1,1 @@
-A work in progress..
+A power house for quick GO practise
