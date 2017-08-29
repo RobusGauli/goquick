@@ -2,9 +2,13 @@ import collections
 import click
 import subprocess
 import sys
+import re
 from quickgo.gocli import GoCLI
 from quickgo.goprint import gprint
 from prompt_toolkit.shortcuts import clear
+
+err_regex = re.compile(r'(?:(?::\d)+)?:([:a-z"\. \'A-Z,]+)')
+format_error = lambda text: '\n'.join(s for s in err_regex.findall(text)).strip()
 
 class rdict(dict):
 
@@ -124,7 +128,7 @@ def repl(code, file_name=None):
 
     def execute():
         return_code, output = subprocess.getstatusoutput(_command)
-        return output
+        return output if return_code == 0 else format_error(output.strip())
 
     def evaluate():
         write_to_file()
@@ -156,7 +160,7 @@ def main():
             if doc.text == 'clear':
                 clear()
                 continue
-            response = repl(doc.text.rstrip(';;'), file_name='test.go')
+            response = repl(doc.text.strip().rstrip(';;'), file_name='test.go')
             result = response.evaluate()
             gprint(result)
 
