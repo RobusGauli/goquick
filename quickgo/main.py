@@ -123,11 +123,13 @@ def repl(code, file_name=None):
         _file.close()
 
     def execute():
-        return_code = subprocess.call(_command.split(), stdout=sys.stdin, stderr=sys.stderr)
+        return_code, output = subprocess.getstatusoutput(_command)
+        return output
 
     def evaluate():
         write_to_file()
-        execute()
+        output = execute()
+        return output
     r = rdict()
     r.evaluate = evaluate
     return r    
@@ -155,7 +157,8 @@ def main():
                 clear()
                 continue
             response = repl(doc.text.rstrip(';;'), file_name='test.go')
-            response.evaluate()
+            result = response.evaluate()
+            gprint(result)
 
             #gprint(response)
             
