@@ -4,7 +4,7 @@ AA REPL for GOlang
 
 
 This is a complete GORepl inspired by IPYTHON with auto-completion and syntax highlighting.
-
+Feel free to contribute. Thank you!!
 
 
 .. image:: screenshots/screenshot1.png
