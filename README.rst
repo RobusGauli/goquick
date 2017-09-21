@@ -1,9 +1,9 @@
 AA REPL for GOlang
 -------------------
-|CodeCov| |PyPI| |Landscape| 
+|CodeCov| 
 
 
-This is a complete GORepl inspired by IPYTHON with auto-completion and syntax highlighting.
+This is a GORepl inspired by IPYTHON with auto-completion and syntax highlighting.
 Feel free to contribute. Thank you!!
 
 
