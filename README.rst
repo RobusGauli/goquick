@@ -3,7 +3,7 @@ AA REPL for GOlang
 |CodeCov| 
 
 
-This is a GORepl inspired by IPYTHON notebook with auto-completion and syntax highlighting.
+This .  is a GORepl inspired by IPYTHON notebook with auto-completion and syntax highlighting.
 Feel free to contribute. Thank you!!
 
 
